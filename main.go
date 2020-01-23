@@ -1,6 +1,15 @@
 package main
-import "fmt"
-func main() {
-	fmt.Println("hello world!")
-	fmt.Println("Lets build our blockchain!")
-}
+import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
+	"github.com/davecgh/go-spew/spew"
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
+)
