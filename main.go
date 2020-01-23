@@ -13,3 +13,11 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
+
+type Block struct {
+	Index 		int
+	Timestamp 	string
+	BPM			int
+	Hash		string
+	PrevHash	string
+}
