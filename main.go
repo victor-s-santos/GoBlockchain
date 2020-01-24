@@ -27,7 +27,20 @@ var Blockchain []Block
 func calculateHash(block Block) string{
 	record := string(block.Index) + block.Timestamp + string(block.BPM) + block.PrevHash
 	h := sha256.New()
-	h.write([]byte(record))
-	hashed := h.sum(nill)
+	h.Write([]byte(record))
+	hashed := h.Sum(nil)
 	return hex.EncodeToString(hashed)
+}
+
+func generateBlock(oldBlock Block, BPM int) (Block, error) {
+	var newBlock Block
+	t := time.Now()
+	
+	newBlock.Index = oldBlock.Index + 1
+	newBlock.Timestamp = t.String()
+	newBlock.BPM = BPM
+	newBlock.PrevHash = oldBlock.Hash
+	newBlock.Hash = calculateHash(newBlock)
+
+	return newBlock, nil
 }
