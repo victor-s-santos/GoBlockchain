@@ -96,3 +96,7 @@ func handleGetBlockchain(w http.ResponseWriter, r *http.Request) {
 	}
 	io.WriteString(w, string(bytes))
 }
+
+type Message struct {
+	BPM int
+}
