@@ -23,3 +23,11 @@ type Block struct {
 }
 
 var Blockchain []Block
+
+func calculateHash(block Block) string{
+	record := string(block.Index) + block.Timestamp + string(block.BPM) + block.PrevHash
+	h := sha256.New()
+	h.write([]byte(record))
+	hashed := h.sum(nill)
+	return hex.EncodeToString(hashed)
+}
