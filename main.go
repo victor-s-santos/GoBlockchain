@@ -106,14 +106,14 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&m); err != nil {
-		respondWithJson(w, r, http.StatusBadRequest, r.Body)
+		respondWithJSON(w, r, http.StatusBadRequest, r.Body)
 		return
 	}
 	defer r.Body.Close()
 
 	newBlock, err := generateBlock(Blockchain[len(Blockchain)-1], m.BPM)
 	if err != nil {
-		respondWithJson(w, r, http.StatusInternalServerError, m)
+		respondWithJSON(w, r, http.StatusInternalServerError, m)
 		return
 	}
 	if isBlockValid(newBlock, Blockchain[len(Blockchain)]) {
@@ -122,6 +122,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 		spew.Dump(Blockchain)
 	}
 	respondWithJSON(w, r, http.StatusCreated, newBlock)
+}
 
 
 func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload interface{}) {
@@ -136,30 +137,38 @@ func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload i
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+	go func() {
+		t := time.Now()
+		genesisBlock := Block{0, t.String(), 0, "", ""}
+		spew.Dump(genesisBlock)
+		Blockchain = append(Blockchain, genesisBlock)
+	}()
+	log.Fatal(run())
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
