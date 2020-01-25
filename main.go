@@ -121,7 +121,37 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 		replaceChain(newBlockchain)
 		spew.Dump(Blockchain)
 	}
-	respondWithJson(w, r, http.StatusCreated, newBlock)
+	respondWithJSON(w, r, http.StatusCreated, newBlock)
+
+
+func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload interface{}) {
+	response, err := json.MarshalIndent(payload, "", " ")
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("HTTP 500: Algo de errado não está certo!"))
+		return
+	}
+	w.WriteHeader(code)
+	w.Write(response)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
