@@ -116,7 +116,7 @@ func handleWriteBlock(w http.ResponseWriter, r *http.Request) {
 		respondWithJSON(w, r, http.StatusInternalServerError, m)
 		return
 	}
-	if isBlockValid(newBlock, Blockchain[len(Blockchain)]) {
+	if isBlockValid(newBlock, Blockchain[len(Blockchain) -1]) {
 		newBlockchain := append(Blockchain, newBlock)
 		replaceChain(newBlockchain)
 		spew.Dump(Blockchain)
